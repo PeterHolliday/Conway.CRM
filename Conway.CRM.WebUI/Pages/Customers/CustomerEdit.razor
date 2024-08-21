@@ -1,0 +1,24 @@
+﻿@page "/customers/edit/{CustomerId:guid}"
+@page "/customers/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenTemplateForm TItem="Customer" Data="@Customer" Submit="OnSubmit">
+    <RadzenFieldset Text="Customer Details">
+        <RadzenLabel Text="First Name" />
+        <RadzenTextBox @bind-Value="Customer.CompanyName" Style="width:100%" Name="CompanyName"/>
+        <RadzenRequiredValidator Component="CompanyName" Text="Company name is required" />
+
+        <RadzenLabel Text="Email" />
+        <RadzenTextBox @bind-Value="Customer.Email" Style="width:100%" Name="Email"/>
+        <RadzenEmailValidator Component="Email" Text="Enter a valid email" />
+
+        <RadzenLabel Text="Phone" />
+        <RadzenTextBox @bind-Value="Customer.PhoneNumber" Style="width:100%" Name="PhoneNumber"/>
+        <RadzenRequiredValidator Component="PhoneNumber" Text="Phone number is required" />
+
+        <RadzenLabel Text="Address" />
+        <RadzenTextBox @bind-Value="Customer.Address" Style="width:100%" />
+    </RadzenFieldset>
+    <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
+</RadzenTemplateForm>

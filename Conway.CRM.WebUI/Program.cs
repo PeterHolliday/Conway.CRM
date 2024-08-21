@@ -1,6 +1,10 @@
+using Conway.CRM.Application.Interfaces;
+using Conway.CRM.Infrastructure.Persistence;
+using Conway.CRM.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Radzen;
@@ -20,6 +24,14 @@ builder.Services.AddRadzenCookieThemeService(options =>
     options.Name = "Conway.CRM.WebUITheme";
     options.Duration = TimeSpan.FromDays(365);
 });
+
+builder.Services.AddDbContext<CRMDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Repositories
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

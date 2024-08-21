@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conway.CRM.Domain", "Conway
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conway.CRM.WebUI", "Conway.CRM.WebUI\Conway.CRM.WebUI.csproj", "{A6CD668C-A9B0-4E27-8D5D-4382545679C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conway.CRM.Application", "Conway.CRM.Application\Conway.CRM.Application.csproj", "{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conway.CRM.Infrastructure", "Conway.CRM.Infrastructure\Conway.CRM.Infrastructure.csproj", "{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{A6CD668C-A9B0-4E27-8D5D-4382545679C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6CD668C-A9B0-4E27-8D5D-4382545679C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6CD668C-A9B0-4E27-8D5D-4382545679C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
