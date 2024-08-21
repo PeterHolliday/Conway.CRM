@@ -17,6 +17,7 @@ builder.Services.AddServerSideBlazor().AddHubOptions(o =>
 {
     o.MaximumReceiveMessageSize = 10 * 1024 * 1024;
 });
+
 builder.Services.AddRadzenComponents();
 
 builder.Services.AddRadzenCookieThemeService(options =>
@@ -30,7 +31,9 @@ builder.Services.AddDbContext<CRMDbContext>(options => options.UseSqlServer(buil
 // Register Repositories
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
-
+builder.Services.AddScoped<ILeadRepository, LeadRepository>();
+builder.Services.AddScoped<IOpportunityRepository, OpportunityRepository>();
+builder.Services.AddScoped<IStageRepository, StageRepository>();
 
 var app = builder.Build();
 
