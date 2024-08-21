@@ -1,0 +1,21 @@
+﻿@page "/contacts"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenDataGrid @ref="grid" Data="@Contacts" TItem="Contact" ColumnWidth="200px" AllowPaging="true">
+    <Columns>
+        <RadzenDataGridColumn TItem="Contact" Property="FirstName" Title="First Name" />
+        <RadzenDataGridColumn TItem="Contact" Property="LastName" Title="Last Name" />
+        <RadzenDataGridColumn TItem="Contact" Property="Email" Title="Email" />
+        <RadzenDataGridColumn TItem="Contact" Property="PhoneNumber" Title="Phone" />
+        <RadzenDataGridColumn TItem="Contact" Property="Customer.CompanyName" Title="Company" />
+        <RadzenDataGridColumn TItem="Contact" Context="contact" Width="100px">
+            <Template Context="contact">
+                <RadzenButton Icon="edit" Click="@(() => EditContact(contact.Id))" />
+                <RadzenButton Icon="delete" Click="@(() => DeleteContact(contact.Id))" />
+            </Template>
+        </RadzenDataGridColumn>
+    </Columns>
+</RadzenDataGrid>
+
+<RadzenButton Icon="add" Text="Add Contact" Click="AddContact" />

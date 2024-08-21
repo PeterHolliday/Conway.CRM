@@ -1,20 +1,45 @@
 ﻿@page "/customers"
 
 @using Conway.CRM.Domain.Entities
+<RadzenStack Orientation="Orientation.Vertical">
+    <RadzenDataGrid @ref="gridCustomers"
+                    Data="@Customers"
+                    TItem="Customer"
+                    ColumnWidth="200px"
+                    AllowPaging="true"
+                    ShowPagingSummary="true"
+                    AllowAlternatingRows="true"
+                    AllowFiltering="true"
+                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                    RowSelect="@OnCustomerRowSelect"
+                    AllowSorting>
+        <Columns>
+            <RadzenDataGridColumn TItem="Customer" Property="CompanyName" Title="Company Name" />
+            <RadzenDataGridColumn TItem="Customer" Property="Address1" Title="Address Line 1" />
+            <RadzenDataGridColumn TItem="Customer" Property="Address2" Title="Address Line 2" />
+            <RadzenDataGridColumn TItem="Customer" Property="Address3" Title="Address Line 3" />
+            <RadzenDataGridColumn TItem="Customer" Property="Town" Title="Town" />
+            <RadzenDataGridColumn TItem="Customer" Property="County" Title="County" />
+            <RadzenDataGridColumn TItem="Customer" Property="Postcode" Title="Postcode" />
+            <RadzenDataGridColumn TItem="Customer" Context="customer" Width="100px">
+                <Template Context="customer">
+                    <RadzenButton Icon="edit" Click="@(() => EditCustomer(customer.Id))" />
+                    <RadzenButton Icon="delete" Click="@(() => DeleteCustomer(customer.Id))" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
 
-<RadzenDataGrid @ref="grid" Data="@Customers" TItem="Customer" ColumnWidth="200px" AllowPaging="true">
-    <Columns>
-        <RadzenDataGridColumn TItem="Customer" Property="CompanyName" Title="Company Name" />
-        <RadzenDataGridColumn TItem="Customer" Property="Email" Title="Email" />
-        <RadzenDataGridColumn TItem="Customer" Property="PhoneNumber" Title="Phone" />
-        <RadzenDataGridColumn TItem="Customer" Property="Address" Title="Address" />
-        <RadzenDataGridColumn TItem="Customer" Context="customer" Width="100px">
-            <Template Context="customer">
-                <RadzenButton Icon="edit" Click="@(() => EditCustomer(customer.Id))" />
-                <RadzenButton Icon="delete" Click="@(() => DeleteCustomer(customer.Id))" />
-            </Template>
-        </RadzenDataGridColumn>
-    </Columns>
-</RadzenDataGrid>
-
-<RadzenButton Icon="add" Text="Add Customer" Click="AddCustomer" />
+    <RadzenButton Icon="add" Text="Add Customer" Click="AddCustomer" Style="width: 200px;"/>
+    @if (SelectedCustomer != null)
+    {
+        <RadzenDataGrid @ref="gridContacts" Data="@CustomerContacts" TItem="Contact" AllowPaging="true" AllowAlternatingRows="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Contact" Property="FirstName" Title="First Name" />
+                <RadzenDataGridColumn TItem="Contact" Property="LastName" Title="Last Name" />
+                <RadzenDataGridColumn TItem="Contact" Property="Email" Title="Email" />
+                <RadzenDataGridColumn TItem="Contact" Property="PhoneNumber" Title="Phone" />
+            </Columns>
+        </RadzenDataGrid>
+    }
+</RadzenStack>

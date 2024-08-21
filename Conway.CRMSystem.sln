@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conway.CRM.Domain", "Conway.CRM.Domain\Conway.CRM.Domain.csproj", "{0CF1595E-6CF3-47E0-AA4A-868BC5AB4C9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conway.CRM.Domain", "Conway.CRM.Domain\Conway.CRM.Domain.csproj", "{0CF1595E-6CF3-47E0-AA4A-868BC5AB4C9D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conway.CRM.WebUI", "Conway.CRM.WebUI\Conway.CRM.WebUI.csproj", "{A6CD668C-A9B0-4E27-8D5D-4382545679C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conway.CRM.Application", "Conway.CRM.Application\Conway.CRM.Application.csproj", "{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conway.CRM.Application", "Conway.CRM.Application\Conway.CRM.Application.csproj", "{764DE5B9-B8C1-40D7-84DF-9E177D9A83B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conway.CRM.Infrastructure", "Conway.CRM.Infrastructure\Conway.CRM.Infrastructure.csproj", "{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conway.CRM.Infrastructure", "Conway.CRM.Infrastructure\Conway.CRM.Infrastructure.csproj", "{EB2E6809-E8FA-4FF1-B3E0-635FB8C7A56B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,31 @@
+﻿@page "/contacts/edit/{ContactId:guid}"
+@page "/contacts/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenTemplateForm TItem="Contact" Data="@Contact" Submit="OnSubmit">
+    <RadzenFieldset Text="Contact Details">
+
+        <RadzenLabel Text="Select Customer" />
+        <RadzenDropDown @bind-Value="Contact.CustomerId" Data="@CustomerList" Name="CustomerId" TextProperty="CompanyName" ValueProperty="Id" Style="width:100%"></RadzenDropDown>
+        <RadzenRequiredValidator Component="CustomerId" Text="Customer is required" />
+
+        <RadzenLabel Text="First Name" />
+        <RadzenTextBox @bind-Value="Contact.FirstName" Style="width:100%" Name="FirstName" />
+        <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+
+        <RadzenLabel Text="Last Name" />
+        <RadzenTextBox @bind-Value="Contact.LastName" Style="width:100%" Name="LastName" />
+        <RadzenRequiredValidator Component="LastName" Text="Last name is required" />
+
+        <RadzenLabel Text="Email" />
+        <RadzenTextBox @bind-Value="Contact.Email" Style="width:100%" Name="Email" />
+        <RadzenEmailValidator Component="Email" Text="Enter a valid email" />
+
+        <RadzenLabel Text="Phone" />
+        <RadzenTextBox @bind-Value="Contact.PhoneNumber" Style="width:100%" Name="PhoneNumber" />
+        <RadzenRequiredValidator Component="PhoneNumber" Text="Phone number is required" />
+
+    </RadzenFieldset>
+    <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
+</RadzenTemplateForm>

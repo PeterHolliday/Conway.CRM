@@ -9,5 +9,6 @@ namespace Conway.CRM.Application.Interfaces
         Task AddContactAsync(Contact contact);
         Task UpdateContactAsync(Contact contact);
         Task DeleteContactAsync(Guid id);
+        Task<IEnumerable<Contact>> GetAllContactsAsync();
     }
 }

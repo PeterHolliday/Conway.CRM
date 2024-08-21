@@ -20,6 +20,11 @@ namespace Conway.CRM.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Contact>> GetAllContactsAsync()
+        {
+            return await _context.Contacts.Include(c => c.Customer).ToListAsync();
+        }
+
         public async Task DeleteContactAsync(Guid id)
         {
             var contact = await _context.Contacts.FindAsync(id);
