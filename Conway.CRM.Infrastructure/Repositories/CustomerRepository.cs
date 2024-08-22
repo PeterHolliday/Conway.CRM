@@ -45,5 +45,12 @@ namespace Conway.CRM.Infrastructure.Repositories
             _context.Customers.Update(customer);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Customer>> GetAllCustomersWithContactsAsync()
+        {
+            return await _context.Customers
+                                 .Include(c => c.Contacts)
+                                 .ToListAsync();
+        }
     }
 }

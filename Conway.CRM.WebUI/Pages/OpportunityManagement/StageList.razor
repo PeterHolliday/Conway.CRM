@@ -1,0 +1,28 @@
+﻿@page "/stages"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard Style="width: 50%;">
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenDataGrid @ref="gridStages"
+                        Data="@stages"
+                        TItem="Stage"
+                        ColumnWidth="200px"
+                        AllowPaging="true"
+                        AllowSorting="true"
+                        AllowAlternatingRows="true">
+            <Columns>
+                <RadzenDataGridColumn Width="50%" TItem="Stage" Property="Name" Title="Stage" />
+                <RadzenDataGridColumn Width="25%" TItem="Stage" Property="Order" Title="Order" />
+                <RadzenDataGridColumn TItem="Stage" Context="contact" Width="100px">
+                    <Template Context="stage">
+                        <RadzenButton Icon="edit" Click="@(() => EditStage(stage.Id))" />
+                        <RadzenButton Icon="delete" Click="@(() => DeleteStage(stage.Id))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <RadzenButton Icon="add" Text="Add Stage" Click="AddStage" Style="width: 200px;" />
+    </RadzenStack>
+</RadzenCard>

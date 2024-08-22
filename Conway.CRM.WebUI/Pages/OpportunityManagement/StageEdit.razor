@@ -1,0 +1,21 @@
+﻿@page "/stages/edit/{StageId:guid}"
+@page "/stages/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard Style="width: 50%;">
+    <RadzenTemplateForm TItem="Stage" Data="@Stage" Submit="OnSubmit">
+        <RadzenFieldset Text="Stage Details">
+
+            <RadzenLabel Text="Name" />
+            <RadzenTextBox @bind-Value="Stage.Name" Style="width:100%" Name="StageName" />
+            <RadzenRequiredValidator Component="StageName" Text="Stage name is required" />
+
+            <RadzenLabel Text="Order" />
+            <RadzenNumeric @bind-Value="Stage.Order" Style="width:100%" Name="Order" />
+            <RadzenRequiredValidator Component="Order" Text="Order is required" />
+
+        </RadzenFieldset>
+        <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
+    </RadzenTemplateForm>
+</RadzenCard>

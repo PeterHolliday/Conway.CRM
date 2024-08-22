@@ -3,7 +3,7 @@
 @using Conway.CRM.Domain.Entities
 <RadzenStack Orientation="Orientation.Vertical">
     <RadzenDataGrid @ref="gridCustomers"
-                    Data="@Customers"
+                    Data="@customers"
                     TItem="Customer"
                     ColumnWidth="200px"
                     AllowPaging="true"
@@ -12,15 +12,70 @@
                     AllowFiltering="true"
                     FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                     RowSelect="@OnCustomerRowSelect"
-                    AllowSorting>
+                    AllowSorting
+                    ExpandMode="DataGridExpandMode.Single">
+        <Template Context="customer">
+            <RadzenStack Orientation="Orientation.Vertical">
+                <RadzenCard Variant="Variant.Text" class="rz-background-color-primary-lighter rz-color-on-primary-lighter rz-m-4">
+                    Company:
+                    <b>@customer?.CompanyName</b>
+                </RadzenCard>
+                <RadzenTabs>
+                    <Tabs>
+                        <RadzenTabsItem Text="Details">
+                            <RadzenCard Style="width: 25%">
+                                <RadzenHeading Size="H4" Text="Address Details" Style="margin-bottom: 15px; font-weight: bold; text-align: center;" />
+                                <RadzenRow>
+                                    <RadzenColumn>
+                                        <RadzenText Text="@customer.Address1" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                                <RadzenRow>
+                                    <RadzenColumn>
+                                        <RadzenText Text="@customer.Address2" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                                <RadzenRow>
+                                    <RadzenColumn>
+                                        <RadzenText Text="@customer.Address3" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                                <RadzenRow>
+                                    <RadzenColumn>
+                                        <RadzenText Text="@customer.Town" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                                <RadzenRow>
+                                    <RadzenColumn>
+                                        <RadzenText Text="@customer.County" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                                <RadzenRow>
+                                    <RadzenColumn>
+                                        <RadzenText Text="@customer.Postcode" />
+                                    </RadzenColumn>
+                                </RadzenRow>
+                            </RadzenCard>
+
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Contacts">
+                            <RadzenDataGrid @ref="gridContacts" Data="@customer.Contacts" TItem="Contact" AllowPaging="true" AllowAlternatingRows="true">
+                                <Columns>
+                                    <RadzenDataGridColumn TItem="Contact" Property="FirstName" Title="First Name" />
+                                    <RadzenDataGridColumn TItem="Contact" Property="LastName" Title="Last Name" />
+                                    <RadzenDataGridColumn TItem="Contact" Property="Email" Title="Email" />
+                                    <RadzenDataGridColumn TItem="Contact" Property="PhoneNumber" Title="Phone" />
+                                </Columns>
+                            </RadzenDataGrid>
+                        </RadzenTabsItem>
+                    </Tabs>
+                </RadzenTabs>
+            </RadzenStack>
+        </Template>
         <Columns>
-            <RadzenDataGridColumn TItem="Customer" Property="CompanyName" Title="Company Name" />
-            <RadzenDataGridColumn TItem="Customer" Property="Address1" Title="Address Line 1" />
-            <RadzenDataGridColumn TItem="Customer" Property="Address2" Title="Address Line 2" />
-            <RadzenDataGridColumn TItem="Customer" Property="Address3" Title="Address Line 3" />
-            <RadzenDataGridColumn TItem="Customer" Property="Town" Title="Town" />
-            <RadzenDataGridColumn TItem="Customer" Property="County" Title="County" />
-            <RadzenDataGridColumn TItem="Customer" Property="Postcode" Title="Postcode" />
+            <RadzenDataGridColumn Width="15%" TItem="Customer" Property="CompanyName" Title="Company Name" />
+            <RadzenDataGridColumn Width="10%" TItem="Customer" Property="Town" Title="Town" />
+            <RadzenDataGridColumn Width="10%" TItem="Customer" Property="County" Title="County" />
             <RadzenDataGridColumn TItem="Customer" Context="customer" Width="100px">
                 <Template Context="customer">
                     <RadzenButton Icon="edit" Click="@(() => EditCustomer(customer.Id))" />
@@ -30,16 +85,6 @@
         </Columns>
     </RadzenDataGrid>
 
-    <RadzenButton Icon="add" Text="Add Customer" Click="AddCustomer" Style="width: 200px;"/>
-    @if (SelectedCustomer != null)
-    {
-        <RadzenDataGrid @ref="gridContacts" Data="@CustomerContacts" TItem="Contact" AllowPaging="true" AllowAlternatingRows="true">
-            <Columns>
-                <RadzenDataGridColumn TItem="Contact" Property="FirstName" Title="First Name" />
-                <RadzenDataGridColumn TItem="Contact" Property="LastName" Title="Last Name" />
-                <RadzenDataGridColumn TItem="Contact" Property="Email" Title="Email" />
-                <RadzenDataGridColumn TItem="Contact" Property="PhoneNumber" Title="Phone" />
-            </Columns>
-        </RadzenDataGrid>
-    }
+    <RadzenButton Icon="add" Text="Add Customer" Click="AddCustomer" Style="width: 200px;" />
+
 </RadzenStack>

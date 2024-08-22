@@ -31,6 +31,11 @@
             <RadzenPanelMenuItem Text="Home" Path="" />
             <RadzenPanelMenuItem Text="Customers" Path="customers" Icon="group" />
             <RadzenPanelMenuItem Text="Contacts" Path="contacts" Icon="person" />
+            <RadzenPanelMenuItem Text="Opportunity Management" Icon="rocket_launch" >
+                <RadzenPanelMenuItem class="menu_level_1" Text="Stages" Icon="approval" Path="stages" />
+                <RadzenPanelMenuItem class="menu_level_1" Text="Leads" Icon="person_search" Path="leads" />
+                <RadzenPanelMenuItem class="menu_level_1" Text="Opportunities" Icon="lightbulb" Path="opportunities" />
+            </RadzenPanelMenuItem>
         </RadzenPanelMenu>
         <RadzenStack AlignItems="Radzen.AlignItems.Center" Gap="0" class="rz-py-4 rz-py-lg-6" Style="padding: var(--rz-panel-menu-item-padding);">
             <RadzenText Text="Conway.CRM.WebUI v1.0.0" TextStyle="Radzen.Blazor.TextStyle.Caption" TagName="Radzen.Blazor.TagName.P" TextAlign="Radzen.TextAlign.Center" />
@@ -38,3 +43,9 @@
         </RadzenStack>
     </RadzenSidebar>
 </RadzenLayout>
+
+<style>
+    .menu_level_1 {
+        padding-left: 40px;
+    }
+</style>

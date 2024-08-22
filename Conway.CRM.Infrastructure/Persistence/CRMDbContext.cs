@@ -9,6 +9,20 @@ namespace Conway.CRM.Infrastructure.Persistence
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Stage>()
+                .HasIndex(c => c.Order)
+                .IsUnique();
+
+            modelBuilder.Entity<Contact>()
+                    .HasOne(c => c.Customer)
+                    .WithMany(c => c.Contacts)
+                    .HasForeignKey(c => c.CustomerId);
+        }
+
         public DbSet<Customer> Customers { get; set; }
 
         public DbSet<Contact> Contacts { get; set; }

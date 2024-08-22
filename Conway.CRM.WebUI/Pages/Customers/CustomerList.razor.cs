@@ -1,6 +1,7 @@
 ﻿using Conway.CRM.Application.Interfaces;
 using Conway.CRM.Domain.Entities;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 using Radzen.Blazor;
 
 namespace Conway.CRM.WebUI.Pages.Customers
@@ -8,15 +9,13 @@ namespace Conway.CRM.WebUI.Pages.Customers
     public partial class CustomerList : ComponentBase
     {
         [Inject] protected ICustomerRepository CustomerRepository { get; set; }
-        [Inject] protected IContactRepository ContactRepository { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected DialogService DialogService { get; set; }
 
         protected RadzenDataGrid<Customer> gridCustomers;
         protected RadzenDataGrid<Contact> gridContacts;
 
-        protected List<Customer> Customers;
-        protected List<Contact> Contacts;
-        protected List<Contact> CustomerContacts;
+        protected List<Customer> customers;
 
         protected Customer SelectedCustomer;
 
@@ -27,12 +26,7 @@ namespace Conway.CRM.WebUI.Pages.Customers
 
         private async Task LoadDataAsync()
         {
-            Customers = (await CustomerRepository.GetAllCustomersAsync()).ToList();
-            Contacts = (await ContactRepository.GetAllContactsAsync()).ToList();
-            if (SelectedCustomer != null)
-            {
-                CustomerContacts = (Contacts.Where(c => c.CustomerId == SelectedCustomer.Id)).ToList();
-            }
+            customers = (await CustomerRepository.GetAllCustomersWithContactsAsync()).ToList();
         }
 
         protected void AddCustomer()
@@ -47,16 +41,20 @@ namespace Conway.CRM.WebUI.Pages.Customers
 
         protected async Task DeleteCustomer(Guid customerId)
         {
-            await CustomerRepository.DeleteCustomerAsync(customerId);
-            await LoadDataAsync();
-            await gridCustomers.Reload();
+            var result = await DialogService.Confirm(
+                "Are you sure you want to delete this customer?", "Confirm Delete",
+                new ConfirmOptions() { OkButtonText = "Yes", CancelButtonText = "No" });
+            if (result.HasValue && result.Value)
+            {
+                await CustomerRepository.DeleteCustomerAsync(customerId);
+                await LoadDataAsync();
+                await gridCustomers.Reload();
+            }
         }
 
         private async Task OnCustomerRowSelect(Customer customer)
         {
-            SelectedCustomer = customer;
-            CustomerContacts = (Contacts.Where(c => c.CustomerId == SelectedCustomer.Id)).ToList();
-            //await gridContacts.Reload();
+
         }
     }
 }

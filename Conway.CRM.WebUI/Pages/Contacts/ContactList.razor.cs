@@ -5,7 +5,7 @@ using Radzen.Blazor;
 
 namespace Conway.CRM.WebUI.Pages.Contacts
 {
-    public partial class ContactList
+    public partial class ContactList : ComponentBase
     {
         [Inject] protected IContactRepository ContactRepository { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
@@ -14,6 +14,11 @@ namespace Conway.CRM.WebUI.Pages.Contacts
         protected List<Contact> Contacts;
 
         protected override async Task OnInitializedAsync()
+        {
+            await LoadDataAsync();
+        }
+
+        private async Task LoadDataAsync()
         {
             Contacts = (await ContactRepository.GetAllContactsAsync()).ToList();
         }

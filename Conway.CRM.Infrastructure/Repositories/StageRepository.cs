@@ -45,5 +45,10 @@ namespace Conway.CRM.Infrastructure.Repositories
             _context.Stages.Update(stage);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> IsStageOrderUniqueAsync(int order)
+        {
+            return await _context.Stages.AnyAsync(s => s.Order == order);
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Conway.CRM.Application.Interfaces
         Task AddStageAsync(Stage stage);
         Task UpdateStageAsync(Stage stage);
         Task DeleteStageAsync(Guid id);
+        Task<bool> IsStageOrderUniqueAsync(int order);
     }
 }
