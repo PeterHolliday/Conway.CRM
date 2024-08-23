@@ -1,0 +1,59 @@
+﻿@page "/leads/edit/{LeadId:guid}"
+@page "/leads/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard Style="width: 50%">
+    <RadzenTemplateForm TItem="Lead" Data="@Lead" Submit="OnSubmit">
+        <RadzenFieldset Text="Lead Details">
+
+            <RadzenLabel Text="First Name" />
+            <div class="field-container">
+                <RadzenTextBox @bind-Value="Lead.FirstName" Style="width:90%" Name="FirstName" />
+                <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+            </div>
+
+            <RadzenLabel Text="Last Name" />
+            <RadzenTextBox @bind-Value="Lead.LastName" Style="width:90%" Name="LastName" />
+
+            <RadzenLabel Text="Company Name" />
+            <div class="field-container">
+                <RadzenTextBox @bind-Value="Lead.CompanyName" Style="width:90%" Name="CompanyName" />
+                <RadzenRequiredValidator Component="@(nameof(Lead.CompanyName))" Text="Company Name is required" />
+            </div>
+
+            <RadzenLabel Text="Email" />
+            <div class="field-container">
+                <RadzenTextBox @bind-Value="Lead.Email" Style="width:90%" Name="Email" />
+                <RadzenEmailValidator Component="Email" Text="Enter a valid email" />
+            </div>
+
+            <RadzenLabel Text="Phone" />
+            <div class="field-container">
+                <RadzenTextBox @bind-Value="Lead.PhoneNumber" Style="width:90%" Name="PhoneNumber" />
+            </div>
+
+            <RadzenLabel Text="Mobile" />
+            <div class="field-container">
+
+                <RadzenTextBox @bind-Value="Lead.MobileNumber" Style="width:90%" Name="MobileNumber" />
+            </div>
+
+            <RadzenLabel Text="Is Qualified?" />
+            <div class="field-container">
+                <RadzenCheckBox @bind-Value="Lead.IsQualified" Name="IsQualified" />
+            </div>
+        </RadzenFieldset>
+        <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
+    </RadzenTemplateForm>
+</RadzenCard>
+<style>
+    .field-container {
+        display: flex;
+        align-items: center;
+    }
+
+        .field-container .rz-required-validator {
+            margin-left: 10px;
+        }
+</style>

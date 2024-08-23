@@ -9,5 +9,7 @@ namespace Conway.CRM.Application.Interfaces
         Task AddOpportunityAsync(Opportunity opportunity);
         Task UpdateOpportunityAsync(Opportunity opportunity);
         Task DeleteOpportunityAsync(Guid id);
+        Task<IEnumerable<Opportunity>> GetAllOpportunitiesAsync();
+        Task<IEnumerable<Opportunity>> GetAllOpportunitiesWithCustomersAsync();
     }
 }

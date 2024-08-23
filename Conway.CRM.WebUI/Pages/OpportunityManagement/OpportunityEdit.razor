@@ -1,0 +1,40 @@
+﻿@page "/opportunities/edit/{OpportunityId:guid}"
+@page "/opportunities/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard>
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenTemplateForm TItem="Opportunity" Data="@Opportunity" Submit="OnSubmit">
+            <RadzenFieldset Text="Opportunity Details">
+                <RadzenLabel Text="Customer" />
+                <RadzenDropDown Data="@Customers" @bind-Value="Opportunity.CustomerId" TextProperty="CompanyName" ValueProperty="Id" Style="width:100%" />
+
+                <RadzenLabel Text="Site" />
+                <RadzenTextBox @bind-Value="Opportunity.Site" Style="width:100%" />
+
+                <RadzenLabel Text="Aggregates Volume" />
+                <RadzenNumeric @bind-Value="Opportunity.AggregatesVolume" Style="width:100%" />
+
+                <RadzenLabel Text="Asphalt Volume" />
+                <RadzenNumeric @bind-Value="Opportunity.AsphaltVolume" Style="width:100%" />
+
+                <RadzenLabel Text="Expected Start Date" />
+                <RadzenDatePicker @bind-Value="Opportunity.ExpectedStartDate" Style="width:100%" />
+
+                <RadzenLabel Text="Expected Close Date" />
+                <RadzenDatePicker @bind-Value="Opportunity.ExpectedCloseDate" Style="width:100%" />
+
+                <RadzenLabel Text="Stage" />
+                <RadzenDropDown Data="@Stages" @bind-Value="Opportunity.StageId" TextProperty="Name" ValueProperty="Id" Style="width:100%" />
+
+                <RadzenLabel Text="Comments" />
+                <RadzenTextArea @bind-Value="Opportunity.Comments" Style="width:100%" />
+
+                <RadzenLabel Text="Next Chase Date" />
+                <RadzenDatePicker @bind-Value="Opportunity.NextChaseDate" DateFormat="dd-MMM-yy" Style="width:100%" />
+            </RadzenFieldset>
+            <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" Style="width: 200px;" />
+        </RadzenTemplateForm>
+    </RadzenStack>
+</RadzenCard>

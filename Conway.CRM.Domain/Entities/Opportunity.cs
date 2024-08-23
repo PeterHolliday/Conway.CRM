@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace Conway.CRM.Domain.Entities
 {
@@ -6,15 +7,23 @@ namespace Conway.CRM.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public string Name { get; set; }
+        public Guid AccountManagerId { get; set; }
+
+        public int? AggregatesVolume { get; set; }
+
+        public int? AsphaltVolume { get; set; }
+
+        public string Site { get; set; }
         
-        public string Description { get; set; }
+        public string Comments { get; set; }
         
         [Column(TypeName = "decimal(16, 6)")]
         public decimal EstimatedValue { get; set; }
-        
+
         public DateTime ExpectedCloseDate { get; set; }
-        
+
+        public DateTime ExpectedStartDate { get; set; }
+
         public Guid CustomerId { get; set; }
         
         public Customer Customer { get; set; }
@@ -22,5 +31,29 @@ namespace Conway.CRM.Domain.Entities
         public Guid StageId { get; set; }
         
         public Stage Stage { get; set; }
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public DateTime NextChaseDate { get; set; } = DateTime.UtcNow.AddDays(30);
+
+        [NotMapped]
+        public int? TotalVolume { get { return AggregatesVolume + AsphaltVolume; } }
+
+        [NotMapped]
+        public string Month { get { return CreatedAt.ToString("MMM"); } }
+
+        [NotMapped]
+        public int CalendarWeek { get { return GetCalendarWeekNumber(CreatedAt, DayOfWeek.Monday, CalendarWeekRule.FirstDay); } }
+
+
+
+        public int GetCalendarWeekNumber(DateTime date, DayOfWeek firstDayOfWeek, CalendarWeekRule weekRule)
+        {
+            Calendar calendar = CultureInfo.CurrentCulture.Calendar;
+            return calendar.GetWeekOfYear(date, weekRule, firstDayOfWeek);
+        }
+
     }
+
+
 }

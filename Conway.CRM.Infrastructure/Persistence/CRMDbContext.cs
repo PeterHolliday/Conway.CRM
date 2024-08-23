@@ -21,6 +21,16 @@ namespace Conway.CRM.Infrastructure.Persistence
                     .HasOne(c => c.Customer)
                     .WithMany(c => c.Contacts)
                     .HasForeignKey(c => c.CustomerId);
+
+            modelBuilder.Entity<Opportunity>()
+                .HasOne(o => o.Customer)
+                .WithMany(o => o.Opportunities)
+                .HasForeignKey(o => o.CustomerId);
+
+            modelBuilder.Entity<Opportunity>()
+                .HasOne(o => o.Stage)
+                .WithMany(o => o.Opportunities)
+                .HasForeignKey(o => o.StageId);
         }
 
         public DbSet<Customer> Customers { get; set; }

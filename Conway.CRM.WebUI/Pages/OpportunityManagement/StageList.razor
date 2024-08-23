@@ -14,7 +14,7 @@
             <Columns>
                 <RadzenDataGridColumn Width="50%" TItem="Stage" Property="Name" Title="Stage" />
                 <RadzenDataGridColumn Width="25%" TItem="Stage" Property="Order" Title="Order" />
-                <RadzenDataGridColumn TItem="Stage" Context="contact" Width="100px">
+                <RadzenDataGridColumn TItem="Stage" Context="contact" Width="100px" Title="Actions">
                     <Template Context="stage">
                         <RadzenButton Icon="edit" Click="@(() => EditStage(stage.Id))" />
                         <RadzenButton Icon="delete" Click="@(() => DeleteStage(stage.Id))" />

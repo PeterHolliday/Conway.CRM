@@ -29,5 +29,7 @@
         public DateTime UpdatedAt { get; set; }
 
         public List<Contact> Contacts { get; set; } = new List<Contact>();
+
+        public List<Opportunity> Opportunities { get; set; } = new List<Opportunity>();
     }
 }

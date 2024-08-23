@@ -49,5 +49,18 @@ namespace Conway.CRM.Infrastructure.Repositories
             _context.Opportunities.Update(opportunity);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<IEnumerable<Opportunity>> GetAllOpportunitiesAsync()
+        {
+            return await _context.Opportunities.ToListAsync();
+        }
+
+        public async Task<IEnumerable<Opportunity>> GetAllOpportunitiesWithCustomersAsync()
+        {
+            return await _context.Opportunities
+                                 .Include(c => c.Customer)
+                                 .Include(s => s.Stage)
+                                 .ToListAsync();
+        }
     }
 }

@@ -1,5 +1,31 @@
-﻿<h3>LeadList</h3>
+﻿@page "/leads"
 
-@code {
+@using Conway.CRM.Domain.Entities
 
-}
+<RadzenCard Style="width: 100%">
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenDataGrid @ref="gridLeads" Data="@leads" TItem="Lead" ColumnWidth="200px" AllowPaging="true">
+            <Columns>
+                <RadzenDataGridColumn Width="20%" TItem="Lead" Property="@(nameof(Lead.CompanyName))" Title="Company"/>
+                <RadzenDataGridColumn Width="10%" TItem="Lead" Property="FirstName" Title="First Name" />
+                <RadzenDataGridColumn Width="10%" TItem="Lead" Property="LastName" Title="Last Name" />
+                <RadzenDataGridColumn Width="20%" TItem="Lead" Property="Email" Title="Email" />
+                <RadzenDataGridColumn Width="10%" TItem="Lead" Property="PhoneNumber" Title="Phone" />
+                <RadzenDataGridColumn Width="10%" TItem="Lead" Property="MobileNumber" Title="Mobile" />
+                <RadzenDataGridColumn Width="5%" TItem="Lead" Property="@(nameof(Lead.IsQualified))" Title="Qualified?">
+                    <Template Context="data">
+                        <RadzenCheckBox @bind-Value="data.IsQualified" Disabled="true" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="Lead" Context="lead" Width="100px" Title="Actions">
+                    <Template Context="lead">
+                        <RadzenButton Icon="edit" Click="@(() => EditLead(lead.Id))" />
+                        <RadzenButton Icon="delete" Click="@(() => DeleteLead(lead.Id))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <RadzenButton Icon="add" Text="Add Lead" Click="AddLead" Style="width: 200px;" />
+    </RadzenStack>
+</RadzenCard>

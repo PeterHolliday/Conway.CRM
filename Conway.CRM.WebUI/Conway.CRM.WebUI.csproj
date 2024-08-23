@@ -19,4 +19,22 @@
     <ProjectReference Include="..\Conway.CRM.Infrastructure\Conway.CRM.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\OpportunityManagement\OpportunityList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\OpportunityManagement\OpportunityEdit.razor" />
+    <_ContentIncludedByDefault Remove="Pages\OpportunityManagement\OpportunityList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\OpportunityManagement\OpportunityEdit.razor" />
+    <None Include="Pages\OpportunityManagement\OpportunityList.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\OpportunityManagement\OpportunityEdit.razor" />
+  </ItemGroup>
+
 </Project>
