@@ -2,22 +2,57 @@
 @page "/opportunities/add"
 
 @using Conway.CRM.Domain.Entities
+@using FluentValidation
+@inject IValidator<Opportunity> Validator
 
-<RadzenCard>
+<RadzenCard Style="width: 60%;">
     <RadzenStack Orientation="Orientation.Vertical">
         <RadzenTemplateForm TItem="Opportunity" Data="@Opportunity" Submit="OnSubmit">
             <RadzenFieldset Text="Opportunity Details">
-                <RadzenLabel Text="Customer" />
-                <RadzenDropDown Data="@Customers" @bind-Value="Opportunity.CustomerId" TextProperty="CompanyName" ValueProperty="Id" Style="width:100%" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Customer" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDropDown Data="@Customers"
+                                        @bind-Value="Opportunity.CustomerId"
+                                        TextProperty="CompanyName"
+                                        ValueProperty="Id"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        FilterOperator="StringFilterOperator.Contains"
+                                        Style="width:100%"
+                                        Name="CustomerId"
+                                        class="@GetValidationClass(nameof(Opportunity.CustomerId))" />
+                    </RadzenColumn>
+                </RadzenRow>
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Account Manager" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDropDown Data="@People"
+                                        @bind-Value="Opportunity.AccountManagerId"
+                                        TextProperty="FullName"
+                                        ValueProperty="Id"
+                                        Style="width:100%"
+                                        Name="AccountManager"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        FilterOperator="StringFilterOperator.Contains"
+                                        class="@GetValidationClass(nameof(Opportunity.AccountManagerId))" />
+
+                    </RadzenColumn>
+                </RadzenRow>
 
                 <RadzenLabel Text="Site" />
                 <RadzenTextBox @bind-Value="Opportunity.Site" Style="width:100%" />
 
                 <RadzenLabel Text="Aggregates Volume" />
-                <RadzenNumeric @bind-Value="Opportunity.AggregatesVolume" Style="width:100%" />
+                <RadzenNumeric @bind-Value="Opportunity.AggregatesVolume" Style="width:100%" class="@GetValidationClass(nameof(Opportunity.AggregatesVolume))" />
 
                 <RadzenLabel Text="Asphalt Volume" />
-                <RadzenNumeric @bind-Value="Opportunity.AsphaltVolume" Style="width:100%" />
+                <RadzenNumeric @bind-Value="Opportunity.AsphaltVolume" Style="width:100%" class="@GetValidationClass(nameof(Opportunity.AsphaltVolume))" />
 
                 <RadzenLabel Text="Expected Start Date" />
                 <RadzenDatePicker @bind-Value="Opportunity.ExpectedStartDate" Style="width:100%" />
@@ -38,3 +73,10 @@
         </RadzenTemplateForm>
     </RadzenStack>
 </RadzenCard>
+
+<style>
+    .field-validation-error {
+        border-color: red !important;
+        background-color: #ffe6e6; /* Light red background */
+    }
+</style>

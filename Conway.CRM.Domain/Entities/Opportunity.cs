@@ -7,11 +7,14 @@ namespace Conway.CRM.Domain.Entities
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
+
         public Guid AccountManagerId { get; set; }
 
-        public int? AggregatesVolume { get; set; }
+        public Person AccountManager { get; set; }
 
-        public int? AsphaltVolume { get; set; }
+        public int AggregatesVolume { get; set; }
+
+        public int AsphaltVolume { get; set; }
 
         public string Site { get; set; }
         
@@ -32,7 +35,7 @@ namespace Conway.CRM.Domain.Entities
         
         public Stage Stage { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; private set; }
 
         public DateTime NextChaseDate { get; set; } = DateTime.UtcNow.AddDays(30);
 
@@ -45,12 +48,25 @@ namespace Conway.CRM.Domain.Entities
         [NotMapped]
         public int CalendarWeek { get { return GetCalendarWeekNumber(CreatedAt, DayOfWeek.Monday, CalendarWeekRule.FirstDay); } }
 
+        public List<OpportunityStatusChange> OpportunityStatusChanges { get; set; }
 
+
+        [NotMapped]
+        public bool Matched { get; set; }
+        [NotMapped]
+        public Guid MatchedZone { get; set; }
 
         public int GetCalendarWeekNumber(DateTime date, DayOfWeek firstDayOfWeek, CalendarWeekRule weekRule)
         {
             Calendar calendar = CultureInfo.CurrentCulture.Calendar;
             return calendar.GetWeekOfYear(date, weekRule, firstDayOfWeek);
+        }
+
+        public Opportunity()
+        {
+            CreatedAt = DateTime.UtcNow;
+            AggregatesVolume = 0;
+            AsphaltVolume = 0;
         }
 
     }

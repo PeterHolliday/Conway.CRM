@@ -11,8 +11,10 @@
                         AllowPaging="true"
                         ShowPagingSummary="true"
                         AllowFiltering="true"
-                        AllowAlternatingRows="true">
+                        AllowAlternatingRows="true"
+                        AllowSorting="true">
             <Columns>
+                <RadzenDataGridColumn TItem="Opportunity" Property="AccountManager.FullName" Title="Acct Mgr" />
                 <RadzenDataGridColumn TItem="Opportunity" Property="Customer.CompanyName" Title="Customer" />
                 <RadzenDataGridColumn TItem="Opportunity" Property="Site" Title="Site" />
                 <RadzenDataGridColumn TItem="Opportunity" Property="AggregatesVolume" Title="Aggs Volume" />
@@ -29,6 +31,6 @@
             </Columns>
         </RadzenDataGrid>
 
-        <RadzenButton Icon="add" Text="Add Opportunity" Click="AddOpportunity" Style="width: 200px;"/>
+        <RadzenButton Icon="add" Text="Add Opportunity" Click="AddOpportunity" Style="width: 200px;" />
     </RadzenStack>
 </RadzenCard>

@@ -77,9 +77,10 @@
                 </RadzenCard>
             </Template>
             <Columns>
-                <RadzenDataGridColumn Width="40%" TItem="Customer" Property="CompanyName" Title="Company Name" />
+                <RadzenDataGridColumn Width="35%" TItem="Customer" Property="CompanyName" Title="Company Name" SortOrder="SortOrder.Ascending" />
                 <RadzenDataGridColumn Width="25%" TItem="Customer" Property="Town" Title="Town" />
-                <RadzenDataGridColumn Width="25%" TItem="Customer" Property="County" Title="County" />
+                <RadzenDataGridColumn Width="20%" TItem="Customer" Property="County" Title="County" />
+                <RadzenDataGridColumn Width="10%" TItem="Customer" Property="ExternalRef" Title="External Ref" />
                 <RadzenDataGridColumn TItem="Customer" Context="customer" Title="Actions" Filterable="false">
                     <Template Context="customer">
                         <RadzenButton Icon="edit" Click="@(() => EditCustomer(customer.Id))" />

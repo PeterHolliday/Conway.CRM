@@ -31,10 +31,15 @@
             <RadzenPanelMenuItem Text="Home" Path="" />
             <RadzenPanelMenuItem Text="Customers" Path="customers" Icon="group" />
             <RadzenPanelMenuItem Text="Contacts" Path="contacts" Icon="person" />
-            <RadzenPanelMenuItem Text="Opportunity Management" Icon="rocket_launch" >
+            <RadzenPanelMenuItem Text="People Management" Icon="manage_accounts">
+                <RadzenPanelMenuItem class="menu_level_1" Text="People" Icon="person" Path="people" />
+                <RadzenPanelMenuItem class="menu_level_1" Text="Statuses" Icon="home_work" Path="personstatuses" />
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Text="Opportunity Management" Icon="rocket_launch">
                 <RadzenPanelMenuItem class="menu_level_1" Text="Stages" Icon="approval" Path="stages" />
                 <RadzenPanelMenuItem class="menu_level_1" Text="Leads" Icon="person_search" Path="leads" />
                 <RadzenPanelMenuItem class="menu_level_1" Text="Opportunities" Icon="lightbulb" Path="opportunities" />
+                <RadzenPanelMenuItem class="menu_level_1" Text="Kanban Board" Icon="view_kanban" Path="opportunity-kanbanboard" />
             </RadzenPanelMenuItem>
         </RadzenPanelMenu>
         <RadzenStack AlignItems="Radzen.AlignItems.Center" Gap="0" class="rz-py-4 rz-py-lg-6" Style="padding: var(--rz-panel-menu-item-padding);">

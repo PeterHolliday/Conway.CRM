@@ -1,0 +1,23 @@
+﻿@page "/personstatuses"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard Style="width: 60%">
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenDataGrid @ref="grid" Data="@PersonStatuses" TItem="PersonStatus" AllowPaging="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="PersonStatus" Property="StatusCode" Title="Status Code" />
+                <RadzenDataGridColumn TItem="PersonStatus" Property="StatusText" Title="Status Text" />
+                <RadzenDataGridColumn TItem="PersonStatus" Property="SortOrder" Title="Sort Order" />
+                <RadzenDataGridColumn TItem="PersonStatus" Context="personStatus">
+                    <Template Context="personStatus">
+                        <RadzenButton Icon="edit" Click="@(() => EditPersonStatus(personStatus.Id))" />
+                        <RadzenButton Icon="delete" Click="@(() => DeletePersonStatus(personStatus.Id))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <RadzenButton Icon="add" Text="Add Person Status" Click="AddPersonStatus" Style="width: 200px;"/>
+    </RadzenStack>
+</RadzenCard>

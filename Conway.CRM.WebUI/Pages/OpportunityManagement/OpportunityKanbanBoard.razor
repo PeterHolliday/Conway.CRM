@@ -1,0 +1,52 @@
+﻿@page "/opportunity-kanbanboard"
+
+@using Conway.CRM.Domain.Entities
+
+<style>
+    .kanban-board {
+        display: flex;
+        gap: 20px;
+        overflow-x: auto;
+    }
+
+    .kanban-column {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+        min-width: 250px;
+    }
+
+        .kanban-column h5 {
+            text-align: center;
+        }
+
+    .kanban-item {
+        background-color: #ffffff;
+        padding: 8px;
+        margin-bottom: 8px;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        cursor: grab;
+    }
+</style>
+
+<RadzenDropZoneContainer TItem="Opportunity" Data="@Opportunities" ItemSelector="@ItemSelector" Drop="@OnDrop">
+    <ChildContent>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            @foreach (var stage in Stages)
+            {
+                <RadzenDropZone Value="stage.Id" class="rz-display-flex rz-flex-column rz-background-color-warning-lighter rz-border-warning-light rz-border-radius-2 rz-p-4" Style="flex: 1; gap: 1rem;">
+                    <RadzenText Text="@stage.Name" TextStyle="TextStyle.Subtitle2"></RadzenText>
+                </RadzenDropZone>
+            }
+        </RadzenStack>
+    </ChildContent>
+    <Template>
+        <RadzenCard>
+            <RadzenStack Orientation="Orientation.Vertical">
+                <RadzenText Text="@context.Customer.CompanyName" Style="font-weight: bold"></RadzenText>
+                <RadzenText Text="@context.Comments"></RadzenText>
+            </RadzenStack>
+        </RadzenCard>
+    </Template>
+</RadzenDropZoneContainer>

@@ -1,0 +1,21 @@
+﻿@page "/import-opportunities"
+
+
+<h3>Import Opportunities</h3>
+
+<h3>Import Opportunities</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+
+<InputFile OnChange="OnInputFileChange" class="form-control" />
+
+<button type="button" @onclick="ProcessFile" class="btn btn-primary mt-3">Upload</button>
+
+@if (!string.IsNullOrEmpty(ImportResult))
+{
+    <h4>Import Result</h4>
+    <pre>@ImportResult</pre>
+}

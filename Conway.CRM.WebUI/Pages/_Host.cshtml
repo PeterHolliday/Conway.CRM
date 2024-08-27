@@ -24,6 +24,11 @@
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            console.log("blazorDragDrop:", window.blazorDragDrop);
+        });
+    </script>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
 
     <div id="blazor-error-ui">

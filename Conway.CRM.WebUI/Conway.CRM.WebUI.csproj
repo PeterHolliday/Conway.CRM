@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EPPlus" Version="7.3.0" />
+    <PackageReference Include="FluentValidation" Version="11.9.2" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,16 +28,22 @@
 
   <ItemGroup>
     <_ContentIncludedByDefault Remove="Pages\OpportunityManagement\OpportunityEdit.razor" />
+    <_ContentIncludedByDefault Remove="Pages\OpportunityManagement\OpportunityKanbanBoard.razor" />
     <_ContentIncludedByDefault Remove="Pages\OpportunityManagement\OpportunityList.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Pages\OpportunityManagement\OpportunityEdit.razor" />
+    <None Include="Pages\OpportunityManagement\OpportunityKanbanBoard.razor" />
     <None Include="Pages\OpportunityManagement\OpportunityList.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\OpportunityManagement\OpportunityEdit.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\OpportunityManagement\OpportunityKanbanBoard.razor" />
   </ItemGroup>
 
 </Project>

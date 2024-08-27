@@ -11,5 +11,6 @@ namespace Conway.CRM.Application.Interfaces
         Task DeleteOpportunityAsync(Guid id);
         Task<IEnumerable<Opportunity>> GetAllOpportunitiesAsync();
         Task<IEnumerable<Opportunity>> GetAllOpportunitiesWithCustomersAsync();
+        Task UpdateOpportunityStatusAsync(Guid opportunityId, Guid newStageId);
     }
 }

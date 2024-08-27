@@ -1,0 +1,31 @@
+﻿@page "/people"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard>
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenDataGrid @ref="gridPeople"
+                        Data="@People" TItem="Person"
+                        AllowAlternatingRows="true"
+                        AllowSorting="true"
+                        AllowGrouping="true"
+                        AllowPaging="true"
+                        ShowPagingSummary="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="Person" Property="FullName" Title="Full Name" SortOrder="SortOrder.Ascending" Groupable="false" />
+                <RadzenDataGridColumn TItem="Person" Property="Email" Title="Email" Groupable="false" />
+                <RadzenDataGridColumn TItem="Person" Property="Phone" Title="Phone" Groupable="false" />
+                <RadzenDataGridColumn TItem="Person" Property="Location" Title="Location" />
+                <RadzenDataGridColumn TItem="Person" Context="person" Width="100px">
+                    <Template Context="person">
+                        <RadzenButton Icon="edit" Click="@(() => EditPerson(person.Id))" />
+                        <RadzenButton Icon="delete" Click="@(() => DeletePerson(person.Id))" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+        <RadzenButton Icon="add" Text="Add Person" Click="AddPerson" Style="width: 200px;" />
+    </RadzenStack>
+
+</RadzenCard>

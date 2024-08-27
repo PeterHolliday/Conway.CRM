@@ -1,6 +1,8 @@
 using Conway.CRM.Application.Interfaces;
+using Conway.CRM.Domain.Validations;
 using Conway.CRM.Infrastructure.Persistence;
 using Conway.CRM.Infrastructure.Repositories;
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -28,12 +30,16 @@ builder.Services.AddRadzenCookieThemeService(options =>
 
 builder.Services.AddDbContext<CRMDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddValidatorsFromAssemblyContaining<OpportunityValidator>();
+
 // Register Repositories
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<ILeadRepository, LeadRepository>();
 builder.Services.AddScoped<IOpportunityRepository, OpportunityRepository>();
 builder.Services.AddScoped<IStageRepository, StageRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonStatusRepository, PersonStatusRepository>();
 
 var app = builder.Build();
 

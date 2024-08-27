@@ -1,4 +1,5 @@
 ﻿using Conway.CRM.Application.Interfaces;
+using Conway.CRM.Domain;
 using Conway.CRM.Domain.Entities;
 using Conway.CRM.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -60,7 +61,33 @@ namespace Conway.CRM.Infrastructure.Repositories
             return await _context.Opportunities
                                  .Include(c => c.Customer)
                                  .Include(s => s.Stage)
+                                 .Include(p => p.AccountManager)
                                  .ToListAsync();
+        }
+
+        public async Task UpdateOpportunityStatusAsync(Guid opportunityId, Guid newStageId)
+        {
+            var opportunity = await _context.Opportunities.Include(o => o.Stage).FirstOrDefaultAsync(o => o.Id == opportunityId);
+            if (opportunity == null) throw new Exception("Opportunity not found");
+
+            var newStage = await _context.Stages.FindAsync(newStageId);
+            if (newStage == null) throw new Exception("Stage not found");
+
+            if (newStage.Order < opportunity.Stage.Order)
+            {
+                throw new InvalidOperationException("Cannot move to a previous stage.");
+            }
+
+            var statusChange = new OpportunityStatusChange
+            {
+                OpportunityId = opportunityId,
+                StageId = newStageId
+            };
+
+            opportunity.StageId = newStageId;
+            _context.Opportunities.Update(opportunity);
+            await _context.OpportunityStatusChanges.AddAsync(statusChange);
+            await _context.SaveChangesAsync();
         }
     }
 }

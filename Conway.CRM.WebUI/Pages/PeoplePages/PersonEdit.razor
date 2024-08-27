@@ -1,0 +1,38 @@
+﻿@page "/people/edit/{PersonId:guid}"
+@page "/people/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard>
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenTemplateForm TItem="Person" Data="@Person" Submit="OnSubmit">
+            <RadzenFieldset Text="Person Details">
+                <RadzenLabel Text="First Name" />
+                <RadzenTextBox @bind-Value="Person.FirstName" Style="width:100%" />
+                <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+
+                <RadzenLabel Text="Surname" />
+                <RadzenTextBox @bind-Value="Person.Surname" Style="width:100%" />
+                <RadzenRequiredValidator Component="Surname" Text="Surname is required" />
+
+                <RadzenLabel Text="Email" />
+                <RadzenTextBox @bind-Value="Person.Email" Style="width:100%" />
+                <RadzenEmailValidator Component="Email" Text="Enter a valid email" />
+
+                <RadzenLabel Text="Phone" />
+                <RadzenTextBox @bind-Value="Person.Phone" Style="width:100%" />
+
+                <RadzenLabel Text="Location" />
+                <RadzenTextBox @bind-Value="Person.Location" Style="width:100%" />
+
+                <RadzenLabel Text="Status" />
+                <RadzenDropDown Data="@Statuses" @bind-Value="Person.StatusId" TextProperty="StatusText" ValueProperty="Id" Style="width:100%" Name="PersonStatus"/>
+                <RadzenRequiredValidator Component="PersonStatus" Text="Status is required" />
+
+                <RadzenLabel Text="Town Working At" />
+                <RadzenTextBox @bind-Value="Person.TownWorkingAt" Style="width:100%" />
+            </RadzenFieldset>
+            <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
+        </RadzenTemplateForm>
+    </RadzenStack>
+</RadzenCard>

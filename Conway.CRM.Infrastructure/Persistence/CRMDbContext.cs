@@ -1,4 +1,5 @@
-﻿using Conway.CRM.Domain.Entities;
+﻿using Conway.CRM.Domain;
+using Conway.CRM.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Conway.CRM.Infrastructure.Persistence
@@ -31,6 +32,28 @@ namespace Conway.CRM.Infrastructure.Persistence
                 .HasOne(o => o.Stage)
                 .WithMany(o => o.Opportunities)
                 .HasForeignKey(o => o.StageId);
+
+            modelBuilder.Entity<Person>()
+                .HasOne(p => p.Status)
+                .WithMany(p => p.People)
+                .HasForeignKey(p => p.StatusId);
+
+            modelBuilder.Entity<Opportunity>()
+                .HasOne(o => o.AccountManager)
+                .WithMany(p => p.Opportunities)
+                .HasForeignKey(p => p.AccountManagerId);
+
+            modelBuilder.Entity<OpportunityStatusChange>()
+               .HasOne(osc => osc.Opportunity)
+               .WithMany(o => o.OpportunityStatusChanges)
+               .HasForeignKey(osc => osc.OpportunityId)
+               .OnDelete(DeleteBehavior.Restrict);  // Prevent cascade delete
+
+            modelBuilder.Entity<OpportunityStatusChange>()
+                .HasOne(osc => osc.Stage)
+                .WithMany()
+                .HasForeignKey(osc => osc.StageId)
+                .OnDelete(DeleteBehavior.Restrict);  // Prevent cascade delete
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -42,5 +65,11 @@ namespace Conway.CRM.Infrastructure.Persistence
         public DbSet<Opportunity> Opportunities { get; set; }
 
         public DbSet<Stage> Stages { get; set; }
+
+        public DbSet<Person> People { get; set; }
+
+        public DbSet<PersonStatus> PersonStatuses { get; set; }
+
+        public DbSet<OpportunityStatusChange> OpportunityStatusChanges { get; set; }
     }
 }

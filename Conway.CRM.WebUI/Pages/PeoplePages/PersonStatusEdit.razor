@@ -1,0 +1,25 @@
+﻿@page "/personstatuses/edit/{PersonStatusId:guid}"
+@page "/personstatuses/add"
+
+@using Conway.CRM.Domain.Entities
+
+<RadzenCard Style="width: 50%">
+    <RadzenStack Orientation="Orientation.Vertical">
+        <RadzenTemplateForm TItem="PersonStatus" Data="@PersonStatus" Submit="OnSubmit">
+            <RadzenFieldset Text="Person Status Details">
+                <RadzenLabel Text="Status Code" />
+                <RadzenTextBox @bind-Value="PersonStatus.StatusCode" Style="width:100%" Name="StatusCode" />
+                <RadzenRequiredValidator Component="StatusCode" Text="Status code is required" />
+
+                <RadzenLabel Text="Status Text" />
+                <RadzenTextBox @bind-Value="PersonStatus.StatusText" Style="width:100%" Name="StatusText"/>
+                <RadzenRequiredValidator Component="StatusText" Text="Status text is required" />
+
+                <RadzenLabel Text="Sort Order" />
+                <RadzenNumeric @bind-Value="PersonStatus.SortOrder" Name="SortOrder"/>
+                <RadzenRequiredValidator Component="SortOrder" Text="Sort Order is required" />
+            </RadzenFieldset>
+            <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" Style="width: 200px;"/>
+        </RadzenTemplateForm>
+    </RadzenStack>
+</RadzenCard>
