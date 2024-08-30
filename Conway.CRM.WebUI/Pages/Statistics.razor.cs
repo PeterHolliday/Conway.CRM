@@ -1,4 +1,4 @@
-﻿using Conway.CRM.Application.Interfaces;
+using Conway.CRM.Application.Interfaces;
 using Conway.CRM.Domain.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
@@ -14,6 +14,9 @@ namespace Conway.CRM.WebUI.Pages
         private List<OpportunityStatusChange> StatusChanges;
 
         private int TotalCount = 0;
+
+        [Inject]
+        protected SecurityService Security { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
