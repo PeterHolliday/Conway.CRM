@@ -2,37 +2,114 @@
 @page "/customers/add"
 
 @using Conway.CRM.Domain.Entities
+@using Conway.CRM.WebUI.Helpers
 
-<RadzenTemplateForm TItem="Customer" Data="@Customer" Submit="OnSubmit">
-    <RadzenFieldset Text="Customer Details">
-        <RadzenLabel Text="Company Name" />
-        <RadzenTextBox @bind-Value="Customer.CompanyName" Style="width:100%" Name="CompanyName"/>
-        <RadzenRequiredValidator Component="CompanyName" Text="Company name is required" />
+@using FluentValidation
+@inject IValidator<Customer> Validator
 
-        <RadzenLabel Text="Email" />
-        <RadzenTextBox @bind-Value="Customer.Email" Style="width:100%" Name="Email"/>
+<RadzenCard Style="width: 60%;">
+    <RadzenTemplateForm TItem="Customer" Data="@Customer" Submit="OnSubmit">
+        <RadzenStack Orientation="Orientation.Vertical" Gap="0.25rem">
+            <RadzenFieldset Text="Customer Details">
+                <RadzenStack Orientation="Orientation.Vertical" Gap="0.25rem">
 
-        <RadzenLabel Text="Phone" />
-        <RadzenTextBox @bind-Value="Customer.PhoneNumber" Style="width:100%" Name="PhoneNumber"/>
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Company Name" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.CompanyName" Style="width:100%" Name="CompanyName" class="@ValidationHelper.GetValidationClass(nameof(Customer.CompanyName), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="Address Line 1" />
-        <RadzenTextBox @bind-Value="Customer.Address1" Style="width:100%" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Email" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.Email" Style="width:100%" Name="Email" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="Address Line 2" />
-        <RadzenTextBox @bind-Value="Customer.Address2" Style="width:100%" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Phone" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.PhoneNumber" Style="width:100%" Name="PhoneNumber" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="Address Line 3" />
-        <RadzenTextBox @bind-Value="Customer.Address3" Style="width:100%" />
 
-        <RadzenLabel Text="Town" />
-        <RadzenTextBox @bind-Value="Customer.Town" Style="width:100%" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Address Line 1" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.Address1" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Customer.Address1), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="County" />
-        <RadzenTextBox @bind-Value="Customer.County" Style="width:100%" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Address Line 2" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.Address2" Style="width:100%" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="Postcode" />
-        <RadzenTextBox @bind-Value="Customer.Postcode" Style="width:100%" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Address Line 3" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.Address3" Style="width:100%" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-    </RadzenFieldset>
-    <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
-</RadzenTemplateForm>
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Town" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.Town" Style="width:100%" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="County" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.County" Style="width:100%" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Postcode" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Customer.Postcode" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Customer.Postcode), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Account No" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenNumeric ShowUpDown="false" @bind-Value="Customer.InvoiceAccountNo" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Customer.InvoiceAccountNo), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                </RadzenStack>
+            </RadzenFieldset>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" Shade="Shade.Light" ButtonStyle="ButtonStyle.Success" />
+                <RadzenButton Icon="cancel" Text="Cancel" Click="@CancelAdd" Shade="Shade.Light" ButtonStyle="ButtonStyle.Danger" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenTemplateForm>
+</RadzenCard>

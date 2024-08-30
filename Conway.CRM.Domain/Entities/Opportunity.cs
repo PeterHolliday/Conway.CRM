@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
 
 namespace Conway.CRM.Domain.Entities
@@ -61,6 +62,9 @@ namespace Conway.CRM.Domain.Entities
             Calendar calendar = CultureInfo.CurrentCulture.Calendar;
             return calendar.GetWeekOfYear(date, weekRule, firstDayOfWeek);
         }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
 
         public Opportunity()
         {

@@ -3,12 +3,15 @@
 
 @using Conway.CRM.Domain.Entities
 @using FluentValidation
+@using Conway.CRM.WebUI.Helpers
+
 @inject IValidator<Opportunity> Validator
 
 <RadzenCard Style="width: 60%;">
-    <RadzenStack Orientation="Orientation.Vertical">
-        <RadzenTemplateForm TItem="Opportunity" Data="@Opportunity" Submit="OnSubmit">
-            <RadzenFieldset Text="Opportunity Details">
+    <RadzenTemplateForm TItem="Opportunity" Data="@Opportunity" Submit="OnSubmit">
+        <RadzenFieldset Text="Opportunity Details">
+
+            <RadzenStack Orientation="Orientation.Vertical" Gap="0.25rem">
                 <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
                     <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
                         <RadzenLabel Text="Customer" />
@@ -23,7 +26,7 @@
                                         FilterOperator="StringFilterOperator.Contains"
                                         Style="width:100%"
                                         Name="CustomerId"
-                                        class="@GetValidationClass(nameof(Opportunity.CustomerId))" />
+                                        class="@ValidationHelper.GetValidationClass(nameof(Opportunity.CustomerId), validationErrors)" />
                     </RadzenColumn>
                 </RadzenRow>
                 <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
@@ -40,43 +43,88 @@
                                         AllowFiltering="true"
                                         FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                         FilterOperator="StringFilterOperator.Contains"
-                                        class="@GetValidationClass(nameof(Opportunity.AccountManagerId))" />
+                                        class="@ValidationHelper.GetValidationClass(nameof(Opportunity.AccountManagerId), validationErrors)" />
 
                     </RadzenColumn>
                 </RadzenRow>
 
-                <RadzenLabel Text="Site" />
-                <RadzenTextBox @bind-Value="Opportunity.Site" Style="width:100%" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Site" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenTextBox @bind-Value="Opportunity.Site" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Opportunity.Site), validationErrors)" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Aggregates Volume" />
-                <RadzenNumeric @bind-Value="Opportunity.AggregatesVolume" Style="width:100%" class="@GetValidationClass(nameof(Opportunity.AggregatesVolume))" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Aggregates Volume" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenNumeric @bind-Value="Opportunity.AggregatesVolume" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Opportunity.AggregatesVolume), validationErrors)" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Asphalt Volume" />
-                <RadzenNumeric @bind-Value="Opportunity.AsphaltVolume" Style="width:100%" class="@GetValidationClass(nameof(Opportunity.AsphaltVolume))" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Asphalt Volume" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenNumeric @bind-Value="Opportunity.AsphaltVolume" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Opportunity.AsphaltVolume), validationErrors)" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Expected Start Date" />
-                <RadzenDatePicker @bind-Value="Opportunity.ExpectedStartDate" Style="width:100%" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Expected Start Date" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDatePicker @bind-Value="Opportunity.ExpectedStartDate" Style="width:100%" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Expected Close Date" />
-                <RadzenDatePicker @bind-Value="Opportunity.ExpectedCloseDate" Style="width:100%" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Expected Close Date" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDatePicker @bind-Value="Opportunity.ExpectedCloseDate" Style="width:100%" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Stage" />
-                <RadzenDropDown Data="@Stages" @bind-Value="Opportunity.StageId" TextProperty="Name" ValueProperty="Id" Style="width:100%" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Stage" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDropDown Data="@Stages" @bind-Value="Opportunity.StageId" TextProperty="Name" ValueProperty="Id" Style="width:100%" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Comments" />
-                <RadzenTextArea @bind-Value="Opportunity.Comments" Style="width:100%" />
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Comments" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenTextArea @bind-Value="Opportunity.Comments" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Opportunity.Comments), validationErrors)" />
+                    </RadzenColumn>
+                </RadzenRow>
 
-                <RadzenLabel Text="Next Chase Date" />
-                <RadzenDatePicker @bind-Value="Opportunity.NextChaseDate" DateFormat="dd-MMM-yy" Style="width:100%" />
-            </RadzenFieldset>
-            <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" Style="width: 200px;" />
-        </RadzenTemplateForm>
-    </RadzenStack>
+                <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                    <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                        <RadzenLabel Text="Next Chase Date" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="8">
+                        <RadzenDatePicker @bind-Value="Opportunity.NextChaseDate" DateFormat="dd-MMM-yy" Style="width:100%" />
+                    </RadzenColumn>
+                </RadzenRow>
+
+            </RadzenStack>
+        </RadzenFieldset>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" Style="width: 200px;" Shade="Shade.Light" ButtonStyle="ButtonStyle.Success" />
+            <RadzenButton Icon="cancel" Text="Cancel" Click="@CancelAdd" Style="width: 200px;" Shade="Shade.Light" ButtonStyle="ButtonStyle.Danger" />
+        </RadzenStack>
+    </RadzenTemplateForm>
 </RadzenCard>
-
-<style>
-    .field-validation-error {
-        border-color: red !important;
-        background-color: #ffe6e6; /* Light red background */
-    }
-</style>

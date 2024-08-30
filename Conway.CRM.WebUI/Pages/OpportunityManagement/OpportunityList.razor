@@ -4,32 +4,42 @@
 
 <RadzenCard>
     <RadzenStack Orientation="Orientation.Vertical">
-        <RadzenDataGrid @ref="grid"
-                        Data="@Opportunities"
-                        TItem="Opportunity"
-                        ColumnWidth="200px"
-                        AllowPaging="true"
-                        ShowPagingSummary="true"
-                        AllowFiltering="true"
-                        AllowAlternatingRows="true"
-                        AllowSorting="true">
-            <Columns>
-                <RadzenDataGridColumn TItem="Opportunity" Property="AccountManager.FullName" Title="Acct Mgr" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="Customer.CompanyName" Title="Customer" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="Site" Title="Site" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="AggregatesVolume" Title="Aggs Volume" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="AsphaltVolume" Title="Asphalt Volume" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="ExpectedStartDate" FormatString="{0:dd-MMM-yy}" Title="Expected Start Date" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="ExpectedCloseDate" FormatString="{0:dd-MMM-yy}" Title="Expected Close Date" />
-                <RadzenDataGridColumn TItem="Opportunity" Property="Stage.Name" Title="Stage" />
-                <RadzenDataGridColumn TItem="Opportunity" Context="opportunity" Title="Actions" Filterable="false">
-                    <Template Context="opportunity">
-                        <RadzenButton Icon="edit" Click="@(() => EditOpportunity(opportunity.Id))" />
-                        <RadzenButton Icon="delete" Click="@(() => DeleteOpportunity(opportunity.Id))" />
-                    </Template>
-                </RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>
+        @if (isLoading)
+        {
+            <div class="rz-m-12">
+                <RadzenText Text="Loading..."></RadzenText>
+                <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+            </div>
+        }
+        else
+        {
+            <RadzenDataGrid @ref="grid"
+                            Data="@Opportunities"
+                            TItem="Opportunity"
+                            ColumnWidth="200px"
+                            AllowPaging="true"
+                            ShowPagingSummary="true"
+                            AllowFiltering="true"
+                            AllowAlternatingRows="true"
+                            AllowSorting="true">
+                <Columns>
+                    <RadzenDataGridColumn TItem="Opportunity" Property="AccountManager.FullName" Title="Acct Mgr" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="Customer.CompanyName" Title="Customer" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="Site" Title="Site" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="AggregatesVolume" Title="Aggs Volume" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="AsphaltVolume" Title="Asphalt Volume" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="ExpectedStartDate" FormatString="{0:dd-MMM-yy}" Title="Expected Start Date" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="ExpectedCloseDate" FormatString="{0:dd-MMM-yy}" Title="Expected Close Date" />
+                    <RadzenDataGridColumn TItem="Opportunity" Property="Stage.Name" Title="Stage" />
+                    <RadzenDataGridColumn TItem="Opportunity" Context="opportunity" Title="Actions" Filterable="false">
+                        <Template Context="opportunity">
+                            <RadzenButton Icon="edit" Click="@(() => EditOpportunity(opportunity.Id))" />
+                            <RadzenButton Icon="delete" Click="@(() => DeleteOpportunity(opportunity.Id))" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        }
 
         <RadzenButton Icon="add" Text="Add Opportunity" Click="AddOpportunity" Style="width: 200px;" />
     </RadzenStack>

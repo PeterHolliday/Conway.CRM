@@ -4,7 +4,14 @@
 
 <RadzenCard>
     <RadzenStack Orientation="Orientation.Vertical">
-        <RadzenDataGrid @ref="grid" Data="@Contacts" TItem="Contact" ColumnWidth="200px" AllowPaging="true">
+        <RadzenDataGrid @ref="grid"
+                        Data="@Contacts"
+                        TItem="Contact"
+                        ColumnWidth="200px"
+                        AllowPaging="true"
+                        AllowSorting="true"
+                        AllowFiltering="true"
+                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
             <Columns>
                 <RadzenDataGridColumn Width="10%" TItem="Contact" Property="FirstName" Title="First Name" />
                 <RadzenDataGridColumn Width="10%" TItem="Contact" Property="LastName" Title="Last Name" />

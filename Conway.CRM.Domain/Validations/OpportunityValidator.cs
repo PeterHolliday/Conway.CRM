@@ -28,6 +28,12 @@ namespace Conway.CRM.Domain.Validations
                 .GreaterThan(0)
                 .When(opportunity => opportunity.AggregatesVolume <= 0)
                 .WithMessage("Either Aggregates Volume or Ashphalt Volume must be greater than zero");
+
+            RuleFor(opportunity => opportunity.Comments)
+                .NotEmpty().WithMessage("Comments are required");
+
+            RuleFor(opportunity => opportunity.Site)
+                .NotEmpty().WithMessage("Site is required");
         }
 
         private bool HaveAtLeastOneVolume(Opportunity opportunity)

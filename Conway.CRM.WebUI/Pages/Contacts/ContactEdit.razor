@@ -2,30 +2,69 @@
 @page "/contacts/add"
 
 @using Conway.CRM.Domain.Entities
+@using Conway.CRM.WebUI.Helpers
 
-<RadzenTemplateForm TItem="Contact" Data="@Contact" Submit="OnSubmit">
-    <RadzenFieldset Text="Contact Details">
+@using FluentValidation
+@inject IValidator<Contact> Validator
 
-        <RadzenLabel Text="Select Customer" />
-        <RadzenDropDown @bind-Value="Contact.CustomerId" Data="@CustomerList" Name="CustomerId" TextProperty="CompanyName" ValueProperty="Id" Style="width:100%"></RadzenDropDown>
-        <RadzenRequiredValidator Component="CustomerId" Text="Customer is required" />
+<RadzenCard Style="width: 60%;">
+    <RadzenTemplateForm TItem="Contact" Data="@Contact" Submit="OnSubmit">
+        <RadzenStack Orientation="Orientation.Vertical" Gap="0.25rem">
+            <RadzenFieldset Text="Contact Details">
 
-        <RadzenLabel Text="First Name" />
-        <RadzenTextBox @bind-Value="Contact.FirstName" Style="width:100%" Name="FirstName" />
-        <RadzenRequiredValidator Component="FirstName" Text="First name is required" />
+                <RadzenStack Orientation="Orientation.Vertical" Gap="0.25rem">
 
-        <RadzenLabel Text="Last Name" />
-        <RadzenTextBox @bind-Value="Contact.LastName" Style="width:100%" Name="LastName" />
-        <RadzenRequiredValidator Component="LastName" Text="Last name is required" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Select Customer" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenDropDown @bind-Value="Contact.CustomerId" Data="@CustomerList" Name="CustomerId" TextProperty="CompanyName" ValueProperty="Id" Style="width:100%" class="@ValidationHelper.GetValidationClass(nameof(Contact.CustomerId), validationErrors)"></RadzenDropDown>
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="Email" />
-        <RadzenTextBox @bind-Value="Contact.Email" Style="width:100%" Name="Email" />
-        <RadzenEmailValidator Component="Email" Text="Enter a valid email" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="First Name" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Contact.FirstName" Style="width:100%" Name="FirstName" class="@ValidationHelper.GetValidationClass(nameof(Contact.FirstName), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-        <RadzenLabel Text="Phone" />
-        <RadzenTextBox @bind-Value="Contact.PhoneNumber" Style="width:100%" Name="PhoneNumber" />
-        <RadzenRequiredValidator Component="PhoneNumber" Text="Phone number is required" />
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Last Name" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Contact.LastName" Style="width:100%" Name="LastName" class="@ValidationHelper.GetValidationClass(nameof(Contact.LastName), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
 
-    </RadzenFieldset>
-    <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" />
-</RadzenTemplateForm>
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Email" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Contact.Email" Style="width:100%" Name="Email" class="@ValidationHelper.GetValidationClass(nameof(Contact.Email), validationErrors)" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow AlignItems="AlignItems.Center" RowGap="0.25rem">
+                        <RadzenColumn Size="12" SizeMD="4" class="rz-text-align-start rz-text-align-md-end">
+                            <RadzenLabel Text="Phone" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="8">
+                            <RadzenTextBox @bind-Value="Contact.PhoneNumber" Style="width:100%" Name="PhoneNumber" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                </RadzenStack>
+            </RadzenFieldset>
+            <RadzenStack Orientation="Orientation.Horizontal">
+                <RadzenButton Icon="save" Text="Save" ButtonType="ButtonType.Submit" Shade="Shade.Light" ButtonStyle="ButtonStyle.Success" />
+                <RadzenButton Icon="cancel" Text="Cancel" Click="@CancelAdd" Shade="Shade.Light" ButtonStyle="ButtonStyle.Danger" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenTemplateForm>
+</RadzenCard>

@@ -19,6 +19,8 @@ namespace Conway.CRM.WebUI.Pages.Customers
 
         protected Customer SelectedCustomer;
 
+        private bool isLoading = false;
+
         protected override async Task OnInitializedAsync()
         {
             await LoadDataAsync();
@@ -26,7 +28,9 @@ namespace Conway.CRM.WebUI.Pages.Customers
 
         private async Task LoadDataAsync()
         {
+            isLoading = true;
             customers = (await CustomerRepository.GetAllCustomersWithContactsAsync()).ToList();
+            isLoading = false;
         }
 
         protected void AddCustomer()

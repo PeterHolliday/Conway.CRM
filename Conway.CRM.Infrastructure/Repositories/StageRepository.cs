@@ -50,5 +50,10 @@ namespace Conway.CRM.Infrastructure.Repositories
         {
             return await _context.Stages.AnyAsync(s => s.Order == order);
         }
+
+        public async Task<Stage> GetDefaultStageAsync()
+        {
+            return await _context.Stages.OrderBy(s => s.Order).FirstOrDefaultAsync();
+        }
     }
 }

@@ -1,0 +1,22 @@
+﻿@page "/active-locks"
+
+<h3>Active Locks</h3>
+
+@if (activeLocks != null && activeLocks.Any())
+{
+    <RadzenDataGrid TItem="KeyValuePair<Guid, string>" Data="@activeLocks">
+        <Columns>
+            <RadzenDataGridColumn TItem="KeyValuePair<Guid, string>" Property="Key" Title="Entity ID" />
+            <RadzenDataGridColumn TItem="KeyValuePair<Guid, string>" Property="Value" Title="Locked By" />
+            <RadzenDataGridColumn TItem="KeyValuePair<Guid, string>" Title="Actions">
+                <Template Context="data">
+                    <RadzenButton Text="Unlock" Click="@(args => ForceUnlock(data.Key))" />
+                </Template>
+            </RadzenDataGridColumn>
+        </Columns>
+    </RadzenDataGrid>
+}
+else
+{
+    <p>No active locks found.</p>
+}

@@ -1,6 +1,4 @@
-﻿using Conway.CRM.Domain.Entities;
-
-namespace Conway.CRM.Domain
+﻿namespace Conway.CRM.Domain.Entities
 {
     public class OpportunityStatusChange
     {

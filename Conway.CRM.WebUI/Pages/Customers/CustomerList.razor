@@ -4,91 +4,102 @@
 
 <RadzenCard Style="width: 80%;">
     <RadzenStack Orientation="Orientation.Vertical">
-        <RadzenDataGrid @ref="gridCustomers"
-                        Data="@customers"
-                        TItem="Customer"
-                        ColumnWidth="200px"
-                        AllowPaging="true"
-                        ShowPagingSummary="true"
-                        AllowAlternatingRows="true"
-                        AllowFiltering="true"
-                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                        RowSelect="@OnCustomerRowSelect"
-                        AllowSorting
-                        ExpandMode="DataGridExpandMode.Single">
-            <Template Context="customer">
-                <RadzenCard>
-                    <RadzenStack Orientation="Orientation.Vertical">
-                        <RadzenCard Variant="Variant.Text" class="rz-background-color-primary-lighter rz-color-on-primary-lighter rz-m-4">
-                            Company:
-                            <b>@customer?.CompanyName</b>
-                        </RadzenCard>
-                        <RadzenTabs>
-                            <Tabs>
-                                <RadzenTabsItem Text="Details">
-                                    <RadzenCard Style="width: 25%">
-                                        <RadzenHeading Size="H4" Text="Address Details" Style="margin-bottom: 15px; font-weight: bold; text-align: center;" />
-                                        <RadzenRow>
-                                            <RadzenColumn>
-                                                <RadzenText Text="@customer.Address1" />
-                                            </RadzenColumn>
-                                        </RadzenRow>
-                                        <RadzenRow>
-                                            <RadzenColumn>
-                                                <RadzenText Text="@customer.Address2" />
-                                            </RadzenColumn>
-                                        </RadzenRow>
-                                        <RadzenRow>
-                                            <RadzenColumn>
-                                                <RadzenText Text="@customer.Address3" />
-                                            </RadzenColumn>
-                                        </RadzenRow>
-                                        <RadzenRow>
-                                            <RadzenColumn>
-                                                <RadzenText Text="@customer.Town" />
-                                            </RadzenColumn>
-                                        </RadzenRow>
-                                        <RadzenRow>
-                                            <RadzenColumn>
-                                                <RadzenText Text="@customer.County" />
-                                            </RadzenColumn>
-                                        </RadzenRow>
-                                        <RadzenRow>
-                                            <RadzenColumn>
-                                                <RadzenText Text="@customer.Postcode" />
-                                            </RadzenColumn>
-                                        </RadzenRow>
-                                    </RadzenCard>
+        @if (isLoading)
+        {
+            <div class="rz-m-12">
+                <RadzenText Text="Loading..."></RadzenText>
+                <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" />
+            </div>
+        }
+        else
+        {
+            <RadzenDataGrid @ref="gridCustomers"
+                            Data="@customers"
+                            TItem="Customer"
+                            ColumnWidth="200px"
+                            AllowPaging="true"
+                            ShowPagingSummary="true"
+                            AllowAlternatingRows="true"
+                            AllowFiltering="true"
+                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                            RowSelect="@OnCustomerRowSelect"
+                            AllowSorting
+                            ExpandMode="DataGridExpandMode.Single">
+                <Template Context="customer">
+                    <RadzenCard>
+                        <RadzenStack Orientation="Orientation.Vertical">
+                            <RadzenCard Variant="Variant.Text" class="rz-background-color-primary-lighter rz-color-on-primary-lighter rz-m-4">
+                                Company:
+                                <b>@customer?.CompanyName</b>
+                            </RadzenCard>
+                            <RadzenTabs>
+                                <Tabs>
+                                    <RadzenTabsItem Text="Details">
+                                        <RadzenCard Style="width: 25%">
+                                            <RadzenHeading Size="H4" Text="Address Details" Style="margin-bottom: 15px; font-weight: bold; text-align: center;" />
+                                            <RadzenRow>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@customer.Address1" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                            <RadzenRow>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@customer.Address2" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                            <RadzenRow>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@customer.Address3" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                            <RadzenRow>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@customer.Town" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                            <RadzenRow>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@customer.County" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                            <RadzenRow>
+                                                <RadzenColumn>
+                                                    <RadzenText Text="@customer.Postcode" />
+                                                </RadzenColumn>
+                                            </RadzenRow>
+                                        </RadzenCard>
 
-                                </RadzenTabsItem>
-                                <RadzenTabsItem Text="Contacts">
-                                    <RadzenDataGrid @ref="gridContacts" Data="@customer.Contacts" TItem="Contact" AllowPaging="true" AllowAlternatingRows="true">
-                                        <Columns>
-                                            <RadzenDataGridColumn TItem="Contact" Property="FirstName" Title="First Name" />
-                                            <RadzenDataGridColumn TItem="Contact" Property="LastName" Title="Last Name" />
-                                            <RadzenDataGridColumn TItem="Contact" Property="Email" Title="Email" />
-                                            <RadzenDataGridColumn TItem="Contact" Property="PhoneNumber" Title="Phone" />
-                                        </Columns>
-                                    </RadzenDataGrid>
-                                </RadzenTabsItem>
-                            </Tabs>
-                        </RadzenTabs>
-                    </RadzenStack>
-                </RadzenCard>
-            </Template>
-            <Columns>
-                <RadzenDataGridColumn Width="35%" TItem="Customer" Property="CompanyName" Title="Company Name" SortOrder="SortOrder.Ascending" />
-                <RadzenDataGridColumn Width="25%" TItem="Customer" Property="Town" Title="Town" />
-                <RadzenDataGridColumn Width="20%" TItem="Customer" Property="County" Title="County" />
-                <RadzenDataGridColumn Width="10%" TItem="Customer" Property="ExternalRef" Title="External Ref" />
-                <RadzenDataGridColumn TItem="Customer" Context="customer" Title="Actions" Filterable="false">
-                    <Template Context="customer">
-                        <RadzenButton Icon="edit" Click="@(() => EditCustomer(customer.Id))" />
-                        <RadzenButton Icon="delete" Click="@(() => DeleteCustomer(customer.Id))" />
-                    </Template>
-                </RadzenDataGridColumn>
-            </Columns>
-        </RadzenDataGrid>
+                                    </RadzenTabsItem>
+                                    <RadzenTabsItem Text="Contacts">
+                                        <RadzenDataGrid @ref="gridContacts" Data="@customer.Contacts" TItem="Contact" AllowPaging="true" AllowAlternatingRows="true">
+                                            <Columns>
+                                                <RadzenDataGridColumn TItem="Contact" Property="FirstName" Title="First Name" />
+                                                <RadzenDataGridColumn TItem="Contact" Property="LastName" Title="Last Name" />
+                                                <RadzenDataGridColumn TItem="Contact" Property="Email" Title="Email" />
+                                                <RadzenDataGridColumn TItem="Contact" Property="PhoneNumber" Title="Phone" />
+                                            </Columns>
+                                        </RadzenDataGrid>
+                                    </RadzenTabsItem>
+                                </Tabs>
+                            </RadzenTabs>
+                        </RadzenStack>
+                    </RadzenCard>
+                </Template>
+                <Columns>
+                    <RadzenDataGridColumn Width="35%" TItem="Customer" Property="CompanyName" Title="Company Name" SortOrder="SortOrder.Ascending" />
+                    <RadzenDataGridColumn Width="25%" TItem="Customer" Property="Town" Title="Town" />
+                    <RadzenDataGridColumn Width="20%" TItem="Customer" Property="County" Title="County" />
+                    <RadzenDataGridColumn Width="10%" TItem="Customer" Property="ExternalRef" Title="External Ref" />
+                    <RadzenDataGridColumn TItem="Customer" Context="customer" Title="Actions" Filterable="false">
+                        <Template Context="customer">
+                            <RadzenButton Icon="edit" Click="@(() => EditCustomer(customer.Id))" />
+                            <RadzenButton Icon="delete" Click="@(() => DeleteCustomer(customer.Id))" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+
+        }
 
         <RadzenButton Icon="add" Text="Add Customer" Click="AddCustomer" Style="width: 200px;" />
 

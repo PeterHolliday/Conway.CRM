@@ -1,5 +1,4 @@
-﻿using Conway.CRM.Domain;
-using Conway.CRM.Domain.Entities;
+﻿using Conway.CRM.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Conway.CRM.Infrastructure.Persistence

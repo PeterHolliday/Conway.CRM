@@ -1,6 +1,7 @@
 ﻿using Conway.CRM.Application.Interfaces;
 using Conway.CRM.Domain.Entities;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 
 namespace Conway.CRM.WebUI.Pages.Customers
 {
@@ -8,9 +9,12 @@ namespace Conway.CRM.WebUI.Pages.Customers
     {
         [Inject] protected ICustomerRepository CustomerRepository { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected NotificationService NotificationService { get; set; }
 
         [Parameter] public Guid? CustomerId { get; set; }
         protected Customer Customer = new Customer();
+
+        private Dictionary<string, string> validationErrors = new();
 
         protected override async Task OnInitializedAsync()
         {
@@ -22,15 +26,35 @@ namespace Conway.CRM.WebUI.Pages.Customers
 
         protected async Task OnSubmit()
         {
-            if (CustomerId.HasValue)
+            validationErrors.Clear();
+            var result = await Validator.ValidateAsync(Customer);
+
+            if (result.IsValid)
             {
-                await CustomerRepository.UpdateCustomerAsync(Customer);
+                if (CustomerId.HasValue)
+                {
+                    await CustomerRepository.UpdateCustomerAsync(Customer);
+                }
+                else
+                {
+                    await CustomerRepository.AddCustomerAsync(Customer);
+                }
+                NavigationManager.NavigateTo("/customers");
             }
             else
             {
-                await CustomerRepository.AddCustomerAsync(Customer);
+                foreach (var error in result.Errors)
+                {
+                    validationErrors[error.PropertyName] = error.ErrorMessage;
+                    NotificationService.Notify(new NotificationMessage() { Summary = "Validation Error", Detail = error.ErrorMessage, Severity = NotificationSeverity.Error });
+                }
             }
 
+            
+        }
+
+        protected async Task CancelAdd()
+        {
             NavigationManager.NavigateTo("/customers");
         }
     }

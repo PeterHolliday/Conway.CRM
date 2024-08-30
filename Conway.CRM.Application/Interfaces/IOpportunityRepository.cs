@@ -1,4 +1,5 @@
-﻿using Conway.CRM.Domain.Entities;
+﻿using Conway.CRM.Domain.Abstractions;
+using Conway.CRM.Domain.Entities;
 
 namespace Conway.CRM.Application.Interfaces
 {
@@ -6,8 +7,8 @@ namespace Conway.CRM.Application.Interfaces
     {
         Task<Opportunity> GetOpportunityByIdAsync(Guid id);
         Task<IEnumerable<Opportunity>> GetOpportunitiesByCustomerIdAsync(Guid customerId);
-        Task AddOpportunityAsync(Opportunity opportunity);
-        Task UpdateOpportunityAsync(Opportunity opportunity);
+        Task<bool> AddOpportunityAsync(Opportunity opportunity);
+        Task<bool> UpdateOpportunityAsync(Opportunity opportunity);
         Task DeleteOpportunityAsync(Guid id);
         Task<IEnumerable<Opportunity>> GetAllOpportunitiesAsync();
         Task<IEnumerable<Opportunity>> GetAllOpportunitiesWithCustomersAsync();

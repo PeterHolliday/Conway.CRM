@@ -1,7 +1,9 @@
 ﻿using Conway.CRM.Application.Interfaces;
 using Conway.CRM.Domain;
+using Conway.CRM.Domain.Abstractions;
 using Conway.CRM.Domain.Entities;
 using Conway.CRM.Infrastructure.Persistence;
+using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 
 namespace Conway.CRM.Infrastructure.Repositories
@@ -10,14 +12,40 @@ namespace Conway.CRM.Infrastructure.Repositories
     {
         private readonly CRMDbContext _context;
 
+        [Inject] protected IStageRepository StageRepository { get; set; }
+
         public OpportunityRepository(CRMDbContext context)
         {
             _context = context;
         }
 
-        public async Task AddOpportunityAsync(Opportunity opportunity)
+        public async Task<bool> AddOpportunityAsync(Opportunity opportunity)
         {
-            await _context.Opportunities.AddAsync(opportunity);
+            using(var transaction = await _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var stage = await _context.Stages.OrderBy(s => s.Order).FirstOrDefaultAsync();
+
+                    await _context.Opportunities.AddAsync(opportunity);
+
+                    var statusChange = new OpportunityStatusChange
+                    {
+                        OpportunityId = opportunity.Id,
+                        StageId = stage.Id
+                    };
+                    await _context.OpportunityStatusChanges.AddAsync(statusChange);
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                    return true;
+
+                }
+                catch (Exception ex) 
+                {
+                    await transaction.RollbackAsync();
+                    return false;
+                }
+            }
             await _context.SaveChangesAsync();
         }
 
@@ -45,10 +73,21 @@ namespace Conway.CRM.Infrastructure.Repositories
                                                .FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        public async Task UpdateOpportunityAsync(Opportunity opportunity)
+        public async Task<bool> UpdateOpportunityAsync(Opportunity opportunity)
         {
-            _context.Opportunities.Update(opportunity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Opportunities.Update(opportunity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+
+
         }
 
         public async Task<IEnumerable<Opportunity>> GetAllOpportunitiesAsync()
@@ -89,5 +128,7 @@ namespace Conway.CRM.Infrastructure.Repositories
             await _context.OpportunityStatusChanges.AddAsync(statusChange);
             await _context.SaveChangesAsync();
         }
+
+        
     }
 }
