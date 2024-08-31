@@ -1,18 +1,10 @@
-using System;
-using System.Web;
-using System.Linq;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Text;
-using System.Text.Json;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 
 using Radzen;
 
-using Conway.CRM.WebUI.Models;
+using Conway.CRM.Domain.Entities.Authentication;
 
 namespace Conway.CRM.WebUI
 {
@@ -22,7 +14,7 @@ namespace Conway.CRM.WebUI
 
         private readonly NavigationManager navigationManager;
 
-        public ApplicationUser User { get; private set; } = new ApplicationUser { Name = "Anonymous" };
+        public ApplicationUser User { get; private set; } = new ApplicationUser { DisplayName = "Anonymous" };
 
         public ClaimsPrincipal Principal { get; private set; }
 
@@ -74,7 +66,7 @@ namespace Conway.CRM.WebUI
 
             if (name != null)
             {
-                User = new ApplicationUser { Name = name };
+                User = new ApplicationUser { DisplayName = name };
             }
 
             return IsAuthenticated();

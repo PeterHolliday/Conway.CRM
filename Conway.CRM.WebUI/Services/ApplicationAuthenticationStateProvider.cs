@@ -1,12 +1,6 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http;
 using System.Security.Claims;
-using System.Threading.Tasks;
+using Conway.CRM.Domain.Entities.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
-
-using Conway.CRM.WebUI.Models;
 
 namespace Conway.CRM.WebUI
 {

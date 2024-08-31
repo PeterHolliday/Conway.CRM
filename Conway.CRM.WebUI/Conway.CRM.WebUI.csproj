@@ -50,4 +50,7 @@
   <ItemGroup>
     <UpToDateCheckInput Remove="Pages\OpportunityManagement\Statistics.razor" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

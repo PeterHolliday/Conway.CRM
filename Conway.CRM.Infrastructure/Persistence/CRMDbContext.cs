@@ -1,4 +1,5 @@
 ﻿using Conway.CRM.Domain.Entities;
+using Conway.CRM.Domain.Entities.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 namespace Conway.CRM.Infrastructure.Persistence
@@ -53,6 +54,19 @@ namespace Conway.CRM.Infrastructure.Persistence
                 .WithMany()
                 .HasForeignKey(osc => osc.StageId)
                 .OnDelete(DeleteBehavior.Restrict);  // Prevent cascade delete
+
+            modelBuilder.Entity<ApplicationUserRole>()
+            .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            modelBuilder.Entity<ApplicationUserRole>()
+                .HasOne(ur => ur.User)
+                .WithMany(u => u.UserRoles)
+                .HasForeignKey(ur => ur.UserId);
+
+            modelBuilder.Entity<ApplicationUserRole>()
+                .HasOne(ur => ur.Role)
+                .WithMany(r => r.UserRoles)
+                .HasForeignKey(ur => ur.RoleId);
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -70,5 +84,9 @@ namespace Conway.CRM.Infrastructure.Persistence
         public DbSet<PersonStatus> PersonStatuses { get; set; }
 
         public DbSet<OpportunityStatusChange> OpportunityStatusChanges { get; set; }
+
+        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<ApplicationRole> Roles { get; set; }
+        public DbSet<ApplicationUserRole> UserRoles { get; set; }
     }
 }

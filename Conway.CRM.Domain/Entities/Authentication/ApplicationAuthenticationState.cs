@@ -1,8 +1,4 @@
-
-using System;
-using System.Collections.Generic;
-
-namespace Conway.CRM.WebUI.Models
+﻿namespace Conway.CRM.Domain.Entities.Authentication
 {
     public class ApplicationClaim
     {
